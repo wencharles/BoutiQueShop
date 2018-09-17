@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout/mainLayout">
+
+<head>
+    <title>Orderedietms</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">List of Ordered Items</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>product name</th>
+                            <th>Quanity</th>
+                            <th>price</th>
+
+
+                        </tr>
+                        <tr th:each="order,iterStat : ${ordereditems}">
+                            <td><span th:text="${iterStat.count}">1</span></td>
+                            <td th:text="${order.product.name}">Product Name</td>
+                            <td th:text="${order.quantity}">Quanity</td>
+                            <td th:text="${order.price}* ${order.quantity}">price</td>
+                            <!--<td><a th:href="@{/orders/{orderNumber}(orderNumber=${order.orderNumber})}" class="btn btn-sm btn-default"><i class="fa fa-edit"></i> Edit</a></td>-->
+                        </tr>
+                        <!--<span>
+                            <label>Total<span th:text="${ordereditems.price}">50</span></label>
+                        </span>-->
+
+                    </table>
+                </div><!-- /.box-body -->
+
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

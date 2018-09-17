@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  layout:decorator="layout/mainLayout">
+
+<head>
+	<title>Home</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+	<!--<section id="slider">&lt;!&ndash;slider&ndash;&gt;
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#slider-carousel" data-slide-to="1"></li>
+							<li data-target="#slider-carousel" data-slide-to="2"></li>
+						</ol>
+
+						<div class="carousel-inner">
+							<div class="item active">
+								<div class="col-sm-6">
+									<h1><span>BOUTIQUE</span>-SHOP</h1>
+									<h2>E-Commerce Shop</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<button type="button" class="btn btn-default get">Get it now</button>
+								</div>
+								<div class="col-sm-6">
+									<img th:src="@{/assets/images/home/girl1.jpg}" class="girl img-responsive" alt="" />
+									<img th:src="@{/assets/images/home/pricing.png}"  class="pricing" alt="" />
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-sm-6">
+									<h1><span>BOUTIQUE</span>-SHOP</h1>
+									<h2>We delivery across the country</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<button type="button" class="btn btn-default get">Order now</button>
+								</div>
+								<div class="col-sm-6">
+									<img th:src="@{/assets/images/home/girl2.jpg}" class="girl img-responsive" alt="" />
+									<img th:src="@{/assets/images/home/pricing.png}"  class="pricing" alt="" />
+								</div>
+							</div>
+
+							<div class="item">
+								<div class="col-sm-6">
+									<h1><span>BOUTIQUE</span>-SHOP</h1>
+									<h2>Kenya Best E-Commerce Platform</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<button type="button" class="btn btn-default get">Get it now</button>
+								</div>
+								<div class="col-sm-6">
+									<img th:src="@{/assets/images/home/girl3.jpg}" class="girl img-responsive" alt="" />
+									<img th:src="@{/assets/images/home/pricing.png}" class="pricing" alt="" />
+								</div>
+							</div>
+
+						</div>
+
+						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						</a>
+						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>&lt;!&ndash;/slider&ndash;&gt;
+-->
+
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar"><!--left side bar-->
+						<h2>Category</h2>
+
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+							<div class="panel panel-default" th:each="cat : ${categories}">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+									<a class="" th:href="@{/categories/{name}(name=${cat.name})}"
+									   th:text="${cat.name}">Category Name</a>
+									</h4>
+								</div>
+							</div>
+
+						</div><!--/category-products-->
+						<!--
+						-->
+						<div class="brands_products"><!--Popular_products-->
+							<h2>Popular Products</h2>
+							<div class="brands-name" >
+								<ul class="total_area" th:each="order: ${popular}">
+                                  	<li th:text="${order.product.name} + '                    '+ '(' + |${order.quantity})|">
+                                    </li>
+
+
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+
+						<div class="price-range"><!--price-range-->
+							<h2>Price Range</h2>
+							<div class="well text-center">
+
+                                <form action="#" th:action="@{/affordable}">
+                                   <!--<label>Less or Equal to <input type="text" name="price" placeholder="450"  autocomplete="off"/></label>-->
+                                    <input type="text" class="span2" value="" name="price" data-slider-min="0" data-slider-max="10000" data-slider-step="5" data-slider-value="[250,450]" id="sl2" /><br />
+								<b class="pull-left">Ksh 0</b> <b class="pull-right">Ksh 10000</b>
+                                </form>
+							</div>
+						</div><!--/price-range-->
+
+						<div class="shipping text-center"><!--shipping-->
+							<img th:src="@{/assets/images/home/shipping.jpg}" alt="" />
+						</div><!--/shipping-->
+
+
+					</div><!--end of left side bar-->
+				</div>
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Features Items</h2>
+						<div class="col-sm-4" th:each="cat : ${categories}">
+							<div class="product-image-wrapper" >
+								<div class="single-products"  >
+									<div class="productinfo text-center" th:each="product : ${cat.products}">
+										<img  th:src="@{'/products/images/{id}.jpg'(id=${product.id})}" alt="" height="200" width="250" />
+										<h2 th:text="'Ksh '+ ${product.price}">$9.00</h2>
+
+										<p><a href="#" th:href="@{/products/{sku}(sku=${product.sku})}"
+											  th:text="${product.name}">Product Name</a></p>
+										<div class="product-option-shop"><a class="btn btn-default add-to-cart" data-quantity="1" data-product_sku="" data-product_id="70"
+										   rel="nofollow" href="#"
+										   th:onclick="'javascript:addItemToCart(\'' + ${product.id} + '\');'"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										</div>
+									</div>
+
+								</div>
+								<!--<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+										<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+									</ul>
+								</div>-->
+							</div>
+						</div>
+
+
+
+					</div><!--features_items-->
+
+
+
+					<div class="recommended_items"><!--recommended_items-->
+						<h2 class="title text-center">recommended items</h2>
+
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="item active">
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img th:src="@{/assets/images/home/recommend1.jpg}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="item">
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<img th:src="@{/assets/images/home/recommend1.jpg}" alt="" />
+													<h2>$56</h2>
+													<p>Easy Polo Black Edition</p>
+													<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							</a>
+							<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							</a>
+						</div>
+					</div><!--/recommended_items-->
+
+
+                    <!--category-tab-->
+                    <div class="category-tab"><!--category-tab-->
+                        <div class="col-sm-12">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
+                                <li><a href="#blazers" data-toggle="tab">Blazers</a></li>
+                                <li><a href="#sunglass" data-toggle="tab">Sunglass</a></li>
+                                <li><a href="#kids" data-toggle="tab">Kids</a></li>
+                                <li><a ,
+                        </div>
+                    </div>
+
+                    <!--category-tab-->
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+</body>
+
+</html>

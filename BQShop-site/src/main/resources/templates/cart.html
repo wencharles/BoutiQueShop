@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:text-align="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/mainLayout">
+
+<head>
+    <title>Cart</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <section id="cart_items">
+        <div class="container">
+            <div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href="#" th:href="@{/}">Home</a></li>
+                    <li class="active">Shopping Cart</li>
+                </ol>
+            </div>
+
+
+
+            <div class="woocommerce-info col-md-offset-2 col-md-8" th:if="${#lists.isEmpty(cart.items)}">
+                <h2>Cart is Empty</h2>
+            </div>
+            <se class="table-responsive cart_info" th:unless="${#lists.isEmpty(cart.items)}">
+                <form>
+                <table class="table table-condensed">
+                    <thead>
+                    <tr class="cart_menu">
+                        <td class="image">Item</td>
+                        <td class="description"></td>
+                        <td class="price">Price</td>
+                        <td class="total">Quantity</td>
+                        <td class="total">Total</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr  th:each="item : ${cart.items}">
+                        <td class="cart_product">
+                            <a href="" th:href="@{/products/{sku}(sku=${item.product.sku})}">
+                                <img width="55" height="55"  src="images/cart/one.png" th:src="@{'/products/images/{id}.jpg'(id=${item.product.id})}" alt="poster_1_up"/>
+                            </a>
+                        </td>
+                        <td class="cart_description">
+                            <h4><a href="" th:href="@{/products/{sku}(sku=${item.product.sku})}"
+                                   th:text="${item.product.name}">Colorblock Scuba</a>
+                            </h4>
+                            <p th:text="'Product ID:' + ${item.product.sku}">Web ID: 1089772</p>
+                        </td>
+                        <td class="cart_price">
+                            <p th:text="${item.product.price}">$59</p>
+                        </td>
+                        <td class="cart_quantity">
+                            <div class="cart_quantity_button">
+                                <!--<a class="cart_quantity_up" href=""> + </a>-->
+                                <input class="cart_quantity_input" type="text" name="quantity" value="1" th:value="${item.quantity}"
+                                       th:onchange="'javascript:upadteLineItemQuantity( \''+${item.product.id}+'\' , '+this.value+');'" autocomplete="off" size="2"/>
+                               <!-- <a class="cart_quantity_down" href=""> - </a>-->
+                            </div>
+                        </td>
+                        <td class="cart_total">
+                            <p class="cart_total_price" th:text="${item.product.price * item.quantity}">$59</p>
+                        </td>
+                        <td class="cart_delete">
+                           <!-- <a class="cart_quantity_delete" th:href="@{/cart/items/{id} (id=${tem.product.id})}"><i class="fa fa-times"></i></a>-->
+                            <a class="cart_quantity_delete" href="" th:onclick="'javascript:deleteLineItemFromCart( \''+${item.product.id}+'\');'"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                </form>
+    <!---->
+   <section id="do_action">
+        <section class="container">
+            <div class="heading">
+
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                </div>
+                <div class="col-sm-6">
+                    <div class="total_area">
+                        <ul>
+                            <li>Cart Sub Total <span th:text="${cart.totalAmount}">$59</span></li>
+                            <li>Eco Tax <span>0.00</span></li>
+                            <li>Shipping Cost <span>Free</span></li>
+                            <li>Total <span th:text="'Ksh' +${cart.totalAmount}">$61</span></li>
+                        </ul>
+                        <a class="btn btn-default update" href="">Update</a>
+                        <a class="btn btn-default check_out" th:href="@{/checkout}">Check Out</a>
+                    </div>
+                </div>
+            </div>
+            </section>
+   </section>
+            </se>
+        </div>
+    </section><!--/#do_action-->
+    <!---->
+</div>
+</body>
+</html>

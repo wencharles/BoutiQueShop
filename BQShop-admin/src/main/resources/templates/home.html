@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.w3.org/1999/xhtml"
+	  layout:decorator="layout/mainLayout">
+      
+      <head>
+        <title>Home</title>
+    </head>
+    <body>
+    	<div layout:fragment="pageHeader">
+        <section class="content-header">
+        	<h1>
+            	BoutiQue Shop Admin Site
+            	<small>Manage BoutiQue Shop Site Content</small>
+          	</h1>
+        </section>
+        </div>
+    	<div layout:fragment="content">
+
+			<!--displayss login name-->
+	        <p>Welcome <span th:text="${authenticatedUser.user.name}">User</span>!</p>
+    	</div>
+    	
+    </body>
+    
+</html>
